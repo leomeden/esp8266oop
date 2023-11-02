@@ -2,10 +2,6 @@
 
 #include <WifiConexion.h>
 
-#include <NTPClient.h>
-
-#include <WiFiUdp.h>
-
 const char* ssid = "Galaxy A24 78C5";
 const char* pass = "noa12345";
 
@@ -30,7 +26,7 @@ void setup(){
 void loop() {
   timeClient.update();
 
-  Serial.println(timeClient.getFormattedTime());
+  Serial.println(timeClient.getDay + " " + timeClient.getFormattedTime);
 
   delay(10000);
 }
