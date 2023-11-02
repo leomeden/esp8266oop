@@ -1,11 +1,16 @@
 #include <Arduino.h>
 
+#include <WifiConexion.h>
+
 #include <NTPClient.h>
-#include <ESP8266WiFi.h>
+
 #include <WiFiUdp.h>
 
-const char *ssid     = "Galaxy A24 78C5";
-const char *password = "noa12345";
+const char* ssid = "Galaxy A24 78C5";
+const char* pass = "noa12345";
+
+WifiConexion wifi(ssid, pass);
+
 
 WiFiUDP ntpUDP;
 
@@ -17,12 +22,7 @@ NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", -10800, 3600);
 void setup(){
   Serial.begin(115200);
 
-  WiFi.begin(ssid, password);
-
-  while ( WiFi.status() != WL_CONNECTED ) {
-    delay ( 500 );
-    Serial.print ( "." );
-  }
+  wifi.conectar();
 
   timeClient.begin();
 }
