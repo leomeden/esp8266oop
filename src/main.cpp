@@ -17,25 +17,8 @@ WiFiUDP ntpUDP;
 // update interval (in milliseconds, can be changed using setUpdateInterval() ).
 NTPClient timeClient(ntpUDP, "europe.pool.ntp.org", -10800, 3600);
 
-// These define's must be placed at the beginning before #include "ESP8266TimerInterrupt.h"
-// _TIMERINTERRUPT_LOGLEVEL_ from 0 to 4
-// Don't define _TIMERINTERRUPT_LOGLEVEL_ > 0. Only for special ISR debugging only. Can hang the system.
-#define TIMER_INTERRUPT_DEBUG        0 
-// 1
-#define _TIMERINTERRUPT_LOGLEVEL_    0 
-// 1
-
-// Select a Timer Clock
-#define USING_TIM_DIV1                false           // for shortest and most accurate timer
-#define USING_TIM_DIV16               false           // for medium time and medium accurate timer
-#define USING_TIM_DIV256              true            // for longest timer but least accurate. Default
-
 #include "ESP8266TimerInterrupt.h"
 
-//#define BUILTIN_LED     2       // Pin D4 mapped to pin GPIO2/TXD1 of ESP8266, NodeMCU and WeMoS, control on-board LED
-
-//reemplacé satusLed por flag
-//volatile bool statusLed = false;
 volatile bool flag = false;
 volatile uint32_t lastMillis = 0;
 
@@ -46,23 +29,14 @@ ESP8266Timer ITimer;
 //=======================================================================
 void IRAM_ATTR TimerHandler()
 {
-  /*static bool started = false;
-
-  if (!started)
-  {
-    started = true;
-    pinMode(BUILTIN_LED, OUTPUT);
-  }
-
-  digitalWrite(BUILTIN_LED, statusLed);  //Toggle LED Pin
-  statusLed = !statusLed;*/
+  
   flag = true;
-/*
+
 #if (TIMER_INTERRUPT_DEBUG > 0)
   Serial.println("Delta ms = " + String(millis() - lastMillis));
   lastMillis = millis();
 #endif
-*/
+
 }
 //=======================================================================
 
